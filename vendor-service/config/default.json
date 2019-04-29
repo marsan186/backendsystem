@@ -1,0 +1,4 @@
+{
+    "DBHost": "mongodb://172.18.1.153.:27017/mongodata",
+    "secret": "admin@123"
+}

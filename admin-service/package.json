@@ -1,0 +1,32 @@
+{
+  "name": "adminservice",
+  "version": "1.0.0",
+  "description": "Admin service",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.3",
+    "config": "^1.20.1",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.4.9",
+    "mongoose-unique-validator": "^2.0.2",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "mocha": "^2.4.5"
+  },
+  "scripts": {
+    "start": "SET NODE_CONFIG_ENV=dev&&SET NODE_ENV=dev&& node index.js",
+    "prod": "SET NODE_CONFIG_ENV=production&&SET NODE_ENV=production&& node index.js",
+    "test": "mocha --timeout 10000"
+  },
+  "keywords": [
+    "Nodejs"
+  ],
+  "author": "Tech Kinght Team",
+  "license": "ISC"
+}
