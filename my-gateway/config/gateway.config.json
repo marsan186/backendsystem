@@ -1,0 +1,170 @@
+{
+    "http": {
+        "port": 8080
+    },
+    "admin": {
+        "port": 9876,
+        "hostname": "localhost"
+    },
+    "apiEndpoints": {
+        "api": {
+            "host": "localhost",
+            "paths": "/ip"
+        },
+        "admin": {
+            "host": "localhost",
+            "paths": "/admin/*"
+        },
+        "items": {
+            "host": "localhost",
+            "paths": "/items/*"
+        },
+        "orders": {
+            "host": "localhost",
+            "paths": "/orders/*"
+        },
+        "user": {
+            "host": "localhost",
+            "paths": "/user/*"
+        },
+        "vendor": {
+            "host": "localhost",
+            "paths": "/vendor/*"
+        }
+    },
+    "serviceEndpoints": {
+        "httpbin": {
+            "url": "https://httpbin.org"
+        },
+        "adminsrv": {
+            "url": "http://localhost:3000/"
+        },
+        "itemssrv": {
+            "url": "http://localhost:30001/"
+        }  ,
+        "orderssrv": {
+            "url": "http://localhost:30002/"
+        }, 
+         "usersrv": {
+            "url": "http://localhost:30003/"
+        }, 
+         "vendorsrv": {
+            "url": "http://localhost:30004/"
+        }
+    },
+    "policies": [
+        "basic-auth",
+        "key-auth",
+        "cors",
+        "expression",
+        "log",
+        "oauth2",
+        "proxy",
+        "rate-limit"
+    ],
+    "pipelines": [
+        {
+            "name": "default",
+            "apiEndpoints": [
+                "api"
+            ],
+            "policies": [
+                {
+                    "proxy": [
+                        {
+                            "action": {
+                                "serviceEndpoint": "httpbin",
+                                "changeOrigin": true
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "default-1",
+            "apiEndpoints": [
+                "admin"
+            ],
+            "policies": [
+                {
+                    "proxy": [
+                        {
+                            "action": {
+                                "serviceEndpoint": "adminsrv"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "default-2",
+            "apiEndpoints": [
+                "items"
+            ],
+            "policies": [
+                {
+                    "proxy": [
+                        {
+                            "action": {
+                                "serviceEndpoint": "itemssrv"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "default-3",
+            "apiEndpoints": [
+                "orders"
+            ],
+            "policies": [
+                {
+                    "proxy": [
+                        {
+                            "action": {
+                                "serviceEndpoint": "orderssrv"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "default-4",
+            "apiEndpoints": [
+                "user"
+            ],
+            "policies": [
+                {
+                    "proxy": [
+                        {
+                            "action": {
+                                "serviceEndpoint": "usersrv"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "default-5",
+            "apiEndpoints": [
+                "vendor"
+            ],
+            "policies": [
+                {
+                    "proxy": [
+                        {
+                            "action": {
+                                "serviceEndpoint": "vendorsrv"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

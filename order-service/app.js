@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/items', ItemRouter);
+app.use('/orders', ItemRouter);
 // Configuring the database
 const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true)
@@ -34,8 +34,8 @@ app.get('/', (req, res) => {
 });
 
 // listen for requests
-app.listen(3000, () => {
-  console.log("Server is listening on port 3000");
+app.listen(3002, () => {
+  console.log("Server is listening on port 3002");
 });
 
 module.exports = app;
