@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bcrpt = require('bcrypt-nodejs');
 var uniqueValidator = require('mongoose-unique-validator');
 const jwt = require('jsonwebtoken');
-const config = require("../../config/database.config");
+const  config = require('config');
 mongoose.set('useCreateIndex', true);
 
 const UserSchema = new mongoose.Schema({

@@ -1,6 +1,6 @@
 {
     "http": {
-        "port": 8080
+        "port": 8585
     },
     "admin": {
         "port": 9876,

@@ -9,6 +9,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+
 // Configuring the database
 const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true)
