@@ -40,16 +40,16 @@
             "url": "http://localhost:3000/"
         },
         "itemssrv": {
-            "url": "http://localhost:30001/"
-        }  ,
+            "url": "http://localhost:4000/"
+        },
         "orderssrv": {
-            "url": "http://localhost:30002/"
-        }, 
-         "usersrv": {
-            "url": "http://localhost:30003/"
-        }, 
-         "vendorsrv": {
-            "url": "http://localhost:30004/"
+            "url": "http://localhost:5000/"
+        },
+        "usersrv": {
+            "url": "http://localhost:8000/"
+        },
+        "vendorsrv": {
+            "url": "http://localhost:7000/"
         }
     },
     "policies": [

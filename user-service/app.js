@@ -32,8 +32,8 @@ app.get('/', (req, res) => {
 
 require('./routes/userRoute.js')(app);
 // listen for requests
-app.listen(3003, () => {
-  console.log("Server is listening on port 3003");
+app.listen(8000, () => {
+  console.log("Server is listening on port 8000");
 });
 
 module.exports = app;
