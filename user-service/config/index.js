@@ -1,4 +1,4 @@
-let DB_URI = "mongodb://localhost:27017/testmongodata";
+let DB_URI = "mongodb://localhost:27017/mongodata";
 
 if (process.env.MONGO_DB_URI) {
   DB_URI = process.env.MONGO_DB_URI;

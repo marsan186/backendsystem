@@ -2,7 +2,7 @@ process.env.NODE_ENV = 'test';
 process.env.NODE_CONFIG_ENV = 'test';
 let mongoose = require("mongoose");
 let ItemsModel = require('../models/itemsModel');
-
+let VendorModel = require('./vendorModel');
 //Require the dev-dependencies
 let chai = require('chai');
 let chaiHttp = require('chai-http');
@@ -12,257 +12,307 @@ let should = chai.should();
 chai.use(chaiHttp);
 
 //Our parent block
-describe('Users', () => {
-	beforeEach((done) => { //Before each test we empty the database
-		ItemsModel.deleteMany({}, (err) => {
-			done();
-		});
-	});
+describe('Items', () => {
+    beforeEach((done) => { //Before each test we empty the database
+        ItemsModel.deleteMany({}, (err) => {
+            done();
+        });
+    });
 	/*
-	 * Test the /GET:vendorId  route
+	 * Test the /GET route
 	 */
-	describe('/GET:vendorId User', () => {
-		it('it should GET all the users', (done) => {
-			chai.request(server)
-				.get('/getitems')
-				.end((err, res) => {
-					res.should.have.status(200);
-					res.body.should.be.a('array');
-					res.body.length.should.be.eql(0);
-					done();
-				});
-		});
-	});
+    describe('/GET:vendorid Items', () => {
+        it('it should GET all the Items by vendorid', (done) => {
+            let vendor = new VendorModel({
+                restarunt_name: "Test 1",
+                restarunt_address: "Vellore",
+                restarunt_type: "Hotel",
+                restarunt_id: "VF4522",
+                restarunt_contact_number: "9855212121",
+                restarunt_email: "fsefood2019@gmail.com",
+                restarunt_description: "Good",
+                restarunt_opening_time: "9:00 am",
+                restarunt_closing_time: "10:00 pm",
+                user_name: "test58",
+                password: "test58",
+                active_status: true
+            });
+            vendor.save((err, admin) => {
+                chai.request(server)
+                    .get('/items/getitems/' + admin._id)
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.be.a('array');
+                        res.body.length.should.be.eql(0);
+                        done();
+                    });
+            });
+        });
+    });
 
 	/*
   * Test the /POST route
   */
-	describe('/POST user', () => {
-		it('it should not POST a user without email_address field', (done) => {
-			let user = {
-				name: "Tes1",
-				email_address: "test1@gmail.com",
-				password: "test1",
-				contact_number: '8959554551',
-				active_status: true
-			}
-			chai.request(server)
-				.post('/user')
-				.send(user)
-				.end((err, res) => {
-					res.should.have.status(422);
-					res.body.should.be.a('object');
-					res.body.should.have.property('errors');
-					res.body.errors.should.have.property('email_address');
-					done();
-				});
-		});
+    describe('/POST user', () => {
+        it('it should not POST a user without Item Name field', (done) => {
 
-		it('it should POST a user ', (done) => {
-			let user = {
-				name: "Tes2",
-				userName: "test2@gmail.com",
-				password: "test2",
-				contact_number: '5646545415',
-				active_status: true
-			}
-			chai.request(server)
-				.post('/user')
-				.set('content-type', 'application/json')
-				.send(user)
-				.end((err, res) => {
-					res.should.have.status(200);
-					res.body.should.be.a('object');
-					res.body.should.have.property('name');
-					res.body.should.have.property('password');
-					res.body.should.have.property('email_address');
-					res.body.should.have.property('contact_number');
-					res.body.should.have.property('active_status');
-					done();
-				});
-		});
+            let vendor = new VendorModel({
+                restarunt_name: "Test 3",
+                restarunt_address: "Arni",
+                restarunt_type: "Hotel",
+                restarunt_id: "AN01",
+                restarunt_contact_number: "564545454",
+                restarunt_email: "fsefood2019@gmail.com",
+                restarunt_description: "Good",
+                restarunt_opening_time: "9:00 am",
+                restarunt_closing_time: "10:00 pm",
+                user_name: "test68",
+                password: "test68",
+                active_status: true
+            });
+            vendor.save((err, admin) => {
+                let item = {
+                    item_id: "V112",
+                    item_description: "Mutton",
+                    item_image: '',
+                    belongs_To: admin._id,
+                    item_price: "180",
+                    is_snack: true,
+                    item_available_at: "9:00",
+                    active_status: true,
+                }
+                chai.request(server)
+                    .post('/items/additem')
+                    .send(item)
+                    .end((err, res) => {
+                        res.should.have.status(422);
+                        res.body.should.be.a('object');
+                        res.body.should.have.property('errors');
+                        res.body.errors.should.have.property('item_name');
+                        done();
+                    });
 
-		it('it should POST a user login ', (done) => {
-			let user = new UserModel({
-				name: "demologin",
-				email_address: "demologin@gmail.com",
-				password: "demologin",
-				contact_number: '849455561541',
-				active_status: true
-			});
-			user.save((err, user) => {
-				let login = {
-					userName: "demologin@gmail.com",
-					password: "demologin"
-				};
-
-				chai.request(server)
-					.post('/user/login')
-					.set('content-type', 'application/json')
-					.send(login)
-					.end((err, res) => {
-						res.should.have.status(200);
-						res.body.should.be.a('object');
-						res.body.should.have.property('token');
-
-						done();
-					});
-			});
-		});
+            });
+        });
 
 
-		/*
-	* Test the /GET/:id route
-	*/
-		describe('/GET/:id user', () => {
 
-			it('it should GET a user by the given id', (done) => {
-				let user = new UserModel({
-					name: "demoltest",
-					email_address: "demoltest@gmail.com",
-					password: "demoltest",
-					contact_number: '8778545454',
-					active_status: true
-				});
-				user.save((err, user) => {
-					let login = {
-						userName: "demoltest@gmail.com",
-						password: "demoltest"
-					};
+        it('it should POST a Items ', (done) => {
 
-					chai.request(server)
-						.post('/user/login')
-						.set('content-type', 'application/json')
-						.send(login)
-						.end((err, res) => {
+            let vendor = new VendorModel({
+                restarunt_name: "Test 4",
+                restarunt_address: "Arni",
+                restarunt_type: "Hotel",
+                restarunt_id: "AV01",
+                restarunt_contact_number: "5645645644",
+                restarunt_email: "fsefood2019@gmail.com",
+                restarunt_description: "Good",
+                restarunt_opening_time: "9:00 am",
+                restarunt_closing_time: "10:00 pm",
+                user_name: "test75",
+                password: "test75",
+                active_status: true
+            });
+            vendor.save((err, admin) => {
+                let item = {
+                    item_id: "Test2",
+                    item_name: "chicken",
+                    item_description: "test2",
+                    item_image: '',
+                    belongs_To: admin._id,
+                    item_price: "180",
+                    is_snack: true,
+                    item_available_at: "9:00",
+                    active_status: true,
+                }
+                chai.request(server)
+                    .post('/items/additem')
+                    .set('content-type', 'application/json')
+                    .send(item)
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.be.a('object');
+                        res.body.should.have.property('item_id');
+                        res.body.should.have.property('item_description');
+                        res.body.should.have.property('item_name');
+                        res.body.should.have.property('item_price');
+                        res.body.should.have.property('is_snack');
+                        done();
+                    });
+            });
+        });
 
-							res.should.have.status(200);
-							res.body.should.be.a('object');
-							res.body.should.have.property('token');
-							let token = res.body.token;
 
-							chai.request(server)
-								.get('/user/' + user.id)
-								.set('authorization', token)
-								.send(user)
-								.end((err, res) => {
-									res.should.have.status(200);
-									res.body.should.be.a('object');
-									res.body.should.have.property('name');
-									res.body.should.have.property('password');
-									res.body.should.have.property('email_address');
-									res.body.should.have.property('contact_number');
-									res.body.should.have.property('active_status');
-									res.body.should.have.property('_id').eql(user.id);
-									done();
-								});
-						});
+    });
 
-				});
+    /*
+* Test the /GET/:vendor_id/:item_id route
+*/
+    describe('/GET/:vendor_id/:item_id user', () => {
 
-			});
-		});
+        it('it should GET a Item by the given id', (done) => {
 
-		/*
-		* Test the /PUT/:id route
-		*/
-		describe('/PUT/:id user', () => {
-			it('it should UPDATE a user given the id', (done) => {
-				let user = new UserModel({
-					name: "demodata",
-					email_address: "demodata45@gmail.com",
-					password: "asdaasD",
-					contact_number: '9451212111',
-					active_status: true
-				});
+            let vendor = new VendorModel({
+                restarunt_name: "Test 5",
+                restarunt_address: "Arni",
+                restarunt_type: "Hotel",
+                restarunt_id: "AV01",
+                restarunt_contact_number: "5454546544",
+                restarunt_email: "fsefood2019@gmail.com",
+                restarunt_description: "Good",
+                restarunt_opening_time: "9:00 am",
+                restarunt_closing_time: "10:00 pm",
+                user_name: "test78",
+                password: "test78",
+                active_status: true
+            });
+            vendor.save((err, admin) => {
 
-				user.save((err, user) => {
+                let item = new ItemsModel({
+                    item_id: "IT01",
+                    item_name: "chicken",
+                    item_description: "test1",
+                    item_image: '',
+                    belongs_To: admin._id,
+                    item_price: "150",
+                    is_snack: true,
+                    item_available_at: "9:00",
+                    active_status: true,
+                });
+                item.save((err, item) => {
+                    chai.request(server)
+                        .get('/items/' + item.belongs_To + '/' + item.item_id)
+                        .end((err, res) => {
+                            res.should.have.status(200);
+                            res.body.should.be.a('object');
+                            res.body.should.have.property('item_id');
+                            res.body.should.have.property('item_description');
+                            res.body.should.have.property('item_name');
+                            res.body.should.have.property('item_price');
+                            res.body.should.have.property('is_snack');
+                            res.body.should.have.property('_id').eql(item.id);
+                            done();
+                        });
+                });
 
-					let login = {
-						userName: "demodata45@gmail.com",
-						password: "asdaasD"
-					};
+            });
+        });
+    });
 
-					chai.request(server)
-						.post('/user/login')
-						.set('content-type', 'application/json')
-						.send(login)
-						.end((err, res) => {
+    /*
+    * Test the /PUT/:vendor_id/:item_id route
+    */
+    describe('/PUT/:vendor_id/:item_id Item', () => {
+        it('it should UPDATE a item given the id', (done) => {
 
-							res.should.have.status(200);
-							res.body.should.be.a('object');
-							res.body.should.have.property('token');
-							let token = res.body.token;
 
-							chai.request(server)
-								.put('/user/' + user._id)
-								.set('content-type', 'application/json')
-								.set('authorization', token)
-								.send({
-									name: "demodata",
-									email_address: "demodata45@gmail.com",
-									password: "asdaasD",
-									contact_number: '565445454',
-									active_status: true
-								})
-								.end((err, res) => {
-									res.should.have.status(200);
-									res.body.should.be.a('object');
-									res.body.should.have.property('message').eql('User updated!');
-									res.body.result.should.have.property('contact_number').eql('565445454');
-									done();
-								});
-						});
-				});
-			});
-		});
+            let vendor = new VendorModel({
+                restarunt_name: "Test 6",
+                restarunt_address: "Arni",
+                restarunt_type: "Hotel",
+                restarunt_id: "AV01",
+                restarunt_contact_number: "12312121256412",
+                restarunt_email: "fsefood2019@gmail.com",
+                restarunt_description: "Good",
+                restarunt_opening_time: "9:00 am",
+                restarunt_closing_time: "10:00 pm",
+                user_name: "tgfggh",
+                password: "tgfggh",
+                active_status: true
+            });
+            vendor.save((err, admin) => {
 
-		/*
-		* Test the /DELETE/:id route
-		*/
-		describe('/DELETE/:id user', () => {
-			it('it should DELETE a user given the id', (done) => {
-				let user = new UserModel({
-					name: "test56",
-					email_address: "test56@gmail.com",
-					password: "test56",
-					contact_number: '9754541123',
-					active_status: true
-				});
+                let item = new ItemsModel({
+                    item_id: "IT02",
+                    item_name: "chicken",
+                    item_description: "test2",
+                    item_image: '',
+                    belongs_To: admin._id,
+                    item_price: "450",
+                    is_snack: true,
+                    item_available_at: "9:00",
+                    active_status: true,
+                });
 
-				user.save((err, user) => {
 
-					let login = {
-						userName: "test56@gmail.com",
-						password: "test56"
-					};
+                item.save((err, item) => {
+           
+                    chai.request(server)
+                        .put('/items/' + item.belongs_To + '/' + item.item_id)
+                        .set('content-type', 'application/json')
+                        .send({
+                            item_id: "IT02",
+                            item_name: "Mutton",
+                            item_description: "test2",
+                            item_image: '',
+                            belongs_To: item.belongs_To,
+                            item_price: "895",
+                            is_snack: true,
+                            item_available_at: "9:00",
+                            active_status: true,
+                        })
+                        .end((err, res) => {
+                            res.should.have.status(200);
+                            res.body.should.be.a('object');
+                            res.body.should.have.property('message').eql('item updated!');
+                            res.body.result.should.have.property('item_price').eql(895);
+                            done();
+                        });
+                });
+            });
+        });
+    });
 
-					chai.request(server)
-						.post('/user/login')
-						.set('content-type', 'application/json')
-						.send(login)
-						.end((err, res) => {
-							res.should.have.status(200);
-							res.body.should.be.a('object');
-							res.body.should.have.property('token');
-							let token = res.body.token;
-							chai.request(server)
-								.delete('/user/' + user._id)
-								.set('authorization', token)
-								.end((err, res) => {
-									res.should.have.status(200);
-									res.body.should.be.a('object');
-									res.body.should.have.property('message').eql('User successfully deleted!');
-									res.body.result.should.have.property('_id').eql(user.id);
-									res.body.result.should.have.property('email_address').eql("test56@gmail.com");
-									done();
+    /*
+    * Test the /DELETE/:id route
+    */
+    describe('/DELETE/:id Item', () => {
+        it('it should DELETE a Item given the id', (done) => {
 
-								});
-						});
-				});
-			});
-		});
 
-	});
+            let vendor = new VendorModel({
+                restarunt_name: "Test 7",
+                restarunt_address: "Arni",
+                restarunt_type: "Hotel",
+                restarunt_id: "AV01",
+                restarunt_contact_number: "12121212",
+                restarunt_email: "fsefood2019@gmail.com",
+                restarunt_description: "Good",
+                restarunt_opening_time: "9:00 am",
+                restarunt_closing_time: "10:00 pm",
+                user_name: "asdasdsa",
+                password: "adsadsads",
+                active_status: true
+            });
+            vendor.save((err, admin) => {
+                let item = new ItemsModel({
+                    item_id: "IT04",
+                    item_name: "chicken",
+                    item_description: "test2",
+                    item_image: '',
+                    belongs_To: admin._id,
+                    item_price: "450",
+                    is_snack: true,
+                    item_available_at: "9:00",
+                    active_status: true,
+                });
+
+                item.save((err, item) => {
+                    
+                    chai.request(server)
+                        .delete('/items/deleteitem/' + item.belongs_To + '/' + item.item_id)
+                        .end((err, res) => {
+                            res.should.have.status(200);
+                            res.body.should.be.a('object');
+                            res.body.should.have.property('message').eql('Item successfully deleted!');
+                            res.body.result.should.have.property('item_id').eql("IT04");
+                            done();
+
+                        });
+                });
+            });
+        });
+    });
 
 });
+

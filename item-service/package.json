@@ -1,7 +1,7 @@
 {
-  "name": "adminservice",
+  "name": "itemservice",
   "version": "1.0.0",
-  "description": "Admin service",
+  "description": "Item service",
   "main": "index.js",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",

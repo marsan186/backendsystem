@@ -1,4 +1,4 @@
 {
- 
-  "DBHost": "mongodb://localhost:27017/mongodata"
- }
+  "DBHost": "mongodb://localhost:27017/mongodata",
+  "secret": "testdata"
+}

@@ -39,8 +39,8 @@ app.get('/', (req, res) => {
 
 require('./routes/adminRoute.js')(app);
 // listen for requests
-app.listen(3000, () => {
-  console.log("Server is listening on port 3000");
+app.listen(3001, () => {
+  console.log("Server is listening on port 3001");
 });
 
 module.exports = app;

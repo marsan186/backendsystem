@@ -45,7 +45,7 @@ describe('Vendors', () => {
                 restarunt_type: "Hotel",
                 restarunt_id: "VE10145",
                 restarunt_contact_number: "89898989",
-                restarunt_email: "durgadevi398@gmail.com",
+                restarunt_email: "fsefood2019@gmail.com",
                 restarunt_description: "Good",
                 restarunt_opening_time: "9:00 am",
                 restarunt_closing_time: "10:00 pm",
@@ -72,7 +72,7 @@ describe('Vendors', () => {
                 restarunt_type: "Hotel",
                 restarunt_id: "VE10145",
                 restarunt_contact_number: "89898989",
-                restarunt_email: "durgadevi398@gmail.com",
+                restarunt_email: "fsefood2019@gmail.com",
                 restarunt_description: "Good",
                 restarunt_opening_time: "9:00 am",
                 restarunt_closing_time: "10:00 pm",
@@ -110,7 +110,7 @@ describe('Vendors', () => {
                 restarunt_type: "Hotel",
                 restarunt_id: "VF4522",
                 restarunt_contact_number: "9855212121",
-                restarunt_email: "durgadevi398@gmail.com",
+                restarunt_email: "fsefood2019@gmail.com",
                 restarunt_description: "Good",
                 restarunt_opening_time: "9:00 am",
                 restarunt_closing_time: "10:00 pm",
@@ -136,9 +136,9 @@ describe('Vendors', () => {
 
 
 		/*
-	* Test the /GET/:username route
+	* Test the /GET/:Id route
 	*/
-        describe('/GET/:username vendor', () => {
+        describe('/GET/:Id vendor', () => {
 
             it('it should GET a admin by the given id', (done) => {
                 let vendor = new VendorModel({
@@ -147,12 +147,13 @@ describe('Vendors', () => {
                     restarunt_type: "Hotel",
                     restarunt_id: "VF4522",
                     restarunt_contact_number: "9855212121",
-                    restarunt_email: "durgadevi398@gmail.com",
+                    restarunt_email: "fsefood2019@gmail.com",
                     restarunt_description: "Good",
                     restarunt_opening_time: "9:00 am",
                     restarunt_closing_time: "10:00 pm",
-                    user_name: "test58",
-                    password: "test58"
+                    user_name: "test89",
+                    password: "test89",
+                    active_status:true
                 });
                 vendor.save((err, vendor) => {
 
@@ -192,12 +193,13 @@ describe('Vendors', () => {
                     restarunt_type: "Hotel",
                     restarunt_id: "VFG4555",
                     restarunt_contact_number: "545546565",
-                    restarunt_email: "durgadevi398@gmail.com",
+                    restarunt_email: "fsefood2019@gmail.com",
                     restarunt_description: "Good",
                     restarunt_opening_time: "8:00 am",
                     restarunt_closing_time: "11:00 pm",
                     user_name: "demo89",
-                    password: "demo89"
+                    password: "demo89",
+                    active_status:true
                 });
 
                 vendor.save((err, vendor) => {
@@ -210,7 +212,7 @@ describe('Vendors', () => {
                             restarunt_type: "Hotel",
                             restarunt_id: "VFG4555",
                             restarunt_contact_number: "788787879",
-                            restarunt_email: "durgadevi398@gmail.com",
+                            restarunt_email: "fsefood2019@gmail.com",
                             restarunt_description: "Good",
                             restarunt_opening_time: "7:00 am",
                             restarunt_closing_time: "9:00 pm",
@@ -238,7 +240,7 @@ describe('Vendors', () => {
                     restarunt_type: "Hotel",
                     restarunt_id: "CHGF00001",
                     restarunt_contact_number: "7877879789",
-                    restarunt_email: "durgadevi398@gmail.com",
+                    restarunt_email: "fsefood2019@gmail.com",
                     restarunt_description: "Good",
                     restarunt_opening_time: "8:00 am",
                     restarunt_closing_time: "11:00 pm",
