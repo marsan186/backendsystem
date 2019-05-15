@@ -25,11 +25,11 @@
         },
         "user": {
             "host": "localhost",
-            "paths": "/user/*"
+            "paths": "/user"
         },
         "vendor": {
             "host": "localhost",
-            "paths": "/vendor/*"
+            "paths": "/vendor"
         }
     },
     "serviceEndpoints": {
@@ -49,7 +49,7 @@
             "url": "http://localhost:3004/"
         },
         "vendorsrv": {
-            "url": "http://localhost:3005/"
+            "url": "http://localhost:3006/"
         }
     },
     "policies": [

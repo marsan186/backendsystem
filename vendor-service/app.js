@@ -47,8 +47,8 @@ app.get('/', (req, res) => {
 });
 
 // listen for requests
-app.listen(3005, () => {
-  console.log("Server is listening on port 3005");
+app.listen(3006, () => {
+  console.log("Server is listening on port 3006");
 });
 
 module.exports = app;
