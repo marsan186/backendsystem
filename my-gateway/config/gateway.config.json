@@ -25,11 +25,11 @@
         },
         "user": {
             "host": "localhost",
-            "paths": "/user"
+            "paths": "/user*"
         },
         "vendor": {
             "host": "localhost",
-            "paths": "/vendor"
+            "paths": "/vendor*"
         }
     },
     "serviceEndpoints": {

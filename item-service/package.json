@@ -12,7 +12,8 @@
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.9",
     "mongoose-unique-validator": "^2.0.2",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.9"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -20,7 +21,7 @@
     "mocha": "^2.4.5"
   },
   "scripts": {
-    "start": "SET NODE_CONFIG_ENV=dev&&SET NODE_ENV=dev&& node app.js",
+    "start": "SET NODE_CONFIG_ENV=dev&&SET NODE_ENV=dev&& nodemon app.js",
     "prod": "SET NODE_CONFIG_ENV=production&&SET NODE_ENV=production&& node app.js",
     "test": "mocha --timeout 10000"
   },

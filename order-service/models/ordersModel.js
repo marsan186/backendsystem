@@ -2,6 +2,10 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
+require('./itemsModel');
+require('./userModel');
+
+
 
 var OrderSchema = new Schema({
     placed_date: {

@@ -94,7 +94,7 @@ exports.findVendorByVendorUsername = function (req, res, next) {
     // console.log(user_name);
     Vendor.findOne({
         "user_name": user_name,
-         "active_status": true
+        "active_status": true
     }, function (err, vendor) {
         if (err) return next(err);
         if (!vendor) return res.send(401);
@@ -142,7 +142,7 @@ exports.updateVendorByVendorUsername = function (req, res) {
         var updated = _.merge(vendor, req.body);
         updated.save(function (err, rec) {
             if (err) { return handleError(res, err); }
-            return res.status(200).json({ success: false, result: rec, msg: "updated successfully" });
+            return res.status(200).json({ success: true, result: rec, msg: "updated successfully" });
         });
     });
 };
@@ -154,10 +154,10 @@ exports.activateVendor = function (req, res) {
     }, function (err, vendor) {
         if (err) { return handleError(res, err); }
         if (!vendor) { return res.send(404); }
-        var updated = _.merge(vendor, req.body);
-        updated.save(function (err, rec) {
+        vendor.active_status = true;
+        vendor.save(function (err, rec) {
             if (err) { return handleError(res, err); }
-            return res.status(200).json({ success: false, result: rec, msg: "Activated successfully" });
+            return res.status(200).json({ success: true, result: rec, msg: "Activated successfully" });
         });
     });
 };

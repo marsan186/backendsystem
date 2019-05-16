@@ -15,18 +15,20 @@ exports.createorders = function (req, res) {
 
     var neworder = new Order(req.body);
     neworder.save(function (err, order) {
-    
+
         if (err) return validationError(res, err);
         res.status(200).json(order);
     });
 }
 // Get list of orders
 exports.getAllorders = function (req, res) {
+    console.log(req.params);
     if (req.params.vendor_id != null) {
         Order.find({})
-            .populate('item_id', { belongs_To: req.params.vendor_id })
+            .populate('item_id',{ belongs_To: req.params.vendor_id })
             .exec(function (err, orders) {
-                if (err) return validationError(err);
+                if (err) return validationError(res, err);
+                console.log(orders);
                 res.status(200).json(orders);
             })
     }
@@ -56,12 +58,13 @@ exports.getDishesorders = function (req, res) {
 exports.getorderById = function (req, res) {
 
     if (req.params.order_id != null) {
-        Order.findOne({"_id": req.params.order_id
+        Order.findOne({
+            "_id": req.params.order_id
         })
-        .populate('item_id', { belongs_To: req.params.vendor_id })  .exec(function (err, orders) {
-            if (err) return validationError(err);
-            res.status(200).json(orders);
-        })
+            .populate('item_id', { belongs_To: req.params.vendor_id }).exec(function (err, orders) {
+                if (err) return validationError(err);
+                res.status(200).json(orders);
+            })
     }
     else {
         res.json(400, 'no orders available');
@@ -79,7 +82,7 @@ exports.updateorderById = function (req, res) {
         if (err) { return validationError(res, err); }
         if (!order) { return res.send(404); }
         var updated = _.merge(order, req.body);
-        updated.save(function (err,result) {
+        updated.save(function (err, result) {
             if (err) { return validationError(res, err); }
             return res.json(200, { message: "Order updated!", result });
         });
@@ -92,13 +95,13 @@ exports.deleteorderById = function (req, res) {
     if (req.params.vendor_id != null) {
         Order.findOne({
             "_id": req.params.order_id
-        }) .populate('item_id', { belongs_To: req.params.vendor_id })  .exec( function (err, order) {
-           
-       
+        }).populate('item_id', { belongs_To: req.params.vendor_id }).exec(function (err, order) {
+
+
             if (err) { return handleError(res, err); }
             if (!order) { return res.send(404); }
             order.active_status = false;
-            order.save(function (err,result) {
+            order.save(function (err, result) {
                 if (err) { return handleError(res, err); }
                 return res.json(200, { message: "Order successfully deleted!", result });
             })
